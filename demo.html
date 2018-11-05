@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        li .clearfix:after {
+            clear: both;
+            content: " ";
+            display: block;
+            font-size: 0;
+            height: 0;
+            visibility: hidden
+        }
+
+        .clearfix {
+            zoom: 1
+        }
+
+        body,
+        html {
+            font-size: 14px;
+            background: #f2f2f2;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        #banner {
+            height: 200px;
+            line-height: 200px;
+            background: red;
+            text-align: center;
+            color: #fff;
+        }
+
+        #tabs,
+        #tabs ul {
+            width: 100%;
+            height: 40px;
+            display: flex;
+            overflow: auto;
+            background: #fff;
+            white-space: nowrap;
+        }
+
+        #tabs li {
+            float: left;
+            /* width: 150px; */
+            padding: 0 20px;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        #tabs .tab-active {
+            border-bottom: 1px solid red;
+            color: red;
+        }
+
+        #main .tab-content {
+            /* height: 800px; */
+            text-align: center;
+            border-top: 1px solid #aaa;
+        }
+    </style>
+    <script>
+        // 选项卡构造函数
+        function Tabs(el, options) {
+            this.tabsEl = $(el);
+            this.options = options || {};
+            this.$prevIndex;
+            this.oLioffsetLeftPos = [];
+
+            // 默认选中
+            this.go(0);
+            // 注册tab点击事件
+            this.tabsEl.find("li").on('click', this.handelClick.bind(this));
+            // 注册滚动事件
+            window.addEventListener("scroll", this.scrollFixed.bind(this));
+
+            // 缓存tab的位置信息 用于联动滚动
+            let oLis = this.tabsEl.find("li");
+            for (let i = 0; i < oLis.length; i++) {
+                var oLi = $(oLis[i]);
+                let offsetTop = oLi.offset().left - this.tabsEl.offset().left;
+                console.log(oLi.width())
+                this.oLioffsetLeftPos.push(offsetTop - (this.tabsEl.width() / 2 - oLi.outerWidth() / 2));
+            }
+        }
+
+        Tabs.prototype.handelClick = function (e) {
+            var index = $(e.target).index();
+            this.go(index);
+            this.options.onClickCallBack && this.options.onClickCallBack(index);
+        }
+
+        Tabs.prototype.go = function (index) {
+            console.log("触发go")
+            if (this.$prevIndex === index + "") return;
+            this.$prevIndex = index + "";
+            this.tabsEl.find("li").eq(index).addClass(this.options.activeClass).siblings().removeClass(this.options.activeClass);
+
+            var next = this.oLioffsetLeftPos[parseInt(index)];
+            this.tabsEl.find("ul").animate({ scrollLeft: next }, 300);
+        }
+
+        Tabs.prototype.scrollFixed = function (scrollPosition) {
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            var tabsOffsetTop = this.tabsEl.offset().top;
+            if (scrollTop > tabsOffsetTop) {
+                this.tabsEl.find("ul").css({ position: "fixed", top: 0, left: 0 })
+            } else {
+                this.tabsEl.find("ul").css({ position: "", top: 0, left: 0 })
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="banner">banner</div>
+
+    <div id="tabs">
+        <ul class="clearfix">
+            <li>品味家</li>
+            <li>办公神器</li>
+            <li>绝地求生</li>
+            <li>爱车达人</li>
+            <li>佛系生活</li>
+            <li>时尚家居</li>
+        </ul>
+    </div>
+    <div id="main">
+        <div class="tab-content" style="background:burlywood">
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+            <p>内容一</p>
+        </div>
+        <div class="tab-content" style="background:blueviolet">
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+            <p>内容二</p>
+
+        </div>
+        <div class="tab-content" style="background:coral">
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+            <p>内容三</p>
+
+        </div>
+        <div class="tab-content" style="background:blueviolet">
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+            <p>内容四</p>
+
+        </div>
+        <div class="tab-content" style="background:blue">
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+            <p>内容五</p>
+
+
+        </div>
+        <div class="tab-content" style="background:brown">
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+            <p>内容六</p>
+        </div>
+    </div>
+
+
+    <script>
+
+        $(function () {
+
+            var tabs = new Tabs("#tabs", {
+                activeClass: "tab-active",
+                onClickCallBack: function (index) {
+                    var top = $("#main").find(".tab-content").eq(index).offset().top;
+                    var tabsH = $("#tabs").height();
+                    window.removeEventListener("scroll", getIndex);
+                    // document.body.scrollTop = document.documentElement.scrollTop = (top - tabsH);
+                    $("html,body").animate({ scrollTop: (top - tabsH) }, 300, function (params) {
+                        window.addEventListener("scroll", getIndex)
+                    });
+                }
+            });
+
+            // 缓存每个tab容器距离顶部的top值
+            var _cacheHeight = [];
+            $("#main").find(".tab-content").each(function (index, item) {
+                _cacheHeight.push($(item).offset().top);
+            })
+
+            // 页面滚动获取指定的index值
+            function getIndex() {
+                var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+                scrollY = scrollY + 50;
+                for (let i = 0; i < _cacheHeight.length; i++) {
+                    let height1 = _cacheHeight[i]
+                    let height2 = _cacheHeight[i + 1]
+                    if (scrollY >= height1 && (scrollY < height2 || !height2)) {
+                        tabs.go(i)
+                    }
+                }
+            }
+
+            window.addEventListener("scroll", getIndex)
+
+        })
+    </script>
+</body>
+
+</html>
