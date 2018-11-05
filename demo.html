@@ -57,9 +57,11 @@
             width: 100%;
             height: 40px;
             display: flex;
-            overflow: auto;
+            overflow-x: auto;
+            overflow-y: hidden;
             background: #fff;
             white-space: nowrap;
+            /* -webkit-overflow-scrolling: touch; */
         }
 
         #tabs li {
@@ -126,7 +128,7 @@
             var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
             var tabsOffsetTop = this.tabsEl.offset().top;
             if (scrollTop > tabsOffsetTop) {
-                this.tabsEl.find("ul").css({ position: "fixed", top: 0, left: 0 })
+                this.tabsEl.find("ul").css({ position: "fixed", top: 0, left: 0, zIndex: 999 })
             } else {
                 this.tabsEl.find("ul").css({ position: "", top: 0, left: 0 })
             }
@@ -136,6 +138,7 @@
 
 <body>
     <div id="banner">banner</div>
+    <!-- <div id="banner">banner</div> -->
 
     <div id="tabs">
         <ul class="clearfix">
@@ -476,7 +479,7 @@
             // 页面滚动获取指定的index值
             function getIndex() {
                 var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
-                scrollY = scrollY + 50;
+                scrollY = scrollY + $("#tabs").height() + 10;
                 for (let i = 0; i < _cacheHeight.length; i++) {
                     let height1 = _cacheHeight[i]
                     let height2 = _cacheHeight[i + 1]
