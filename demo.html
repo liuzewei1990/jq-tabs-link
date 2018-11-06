@@ -92,7 +92,7 @@
             this.oLioffsetLeftPos = [];
 
             // 默认选中
-            this.go(0);
+            this.go(3);
             // 注册tab点击事件
             this.tabsEl.find("li").on('click', this.handelClick.bind(this));
             // 注册滚动事件
@@ -103,7 +103,6 @@
             for (let i = 0; i < oLis.length; i++) {
                 var oLi = $(oLis[i]);
                 let offsetTop = oLi.offset().left - this.tabsEl.offset().left;
-                console.log(oLi.width())
                 this.oLioffsetLeftPos.push(offsetTop - (this.tabsEl.width() / 2 - oLi.outerWidth() / 2));
             }
         }
