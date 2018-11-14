@@ -96,7 +96,7 @@
             // 默认选中
             this.go(3);
             // 注册tab点击事件
-            this.tabsEl.find("li").on('click', this.handelClick.bind(this));
+            this.tabsEl.find("li").on('click',this.handelClick.bind(this));
             // 注册滚动事件
             window.addEventListener("scroll", this.scrollFixed.bind(this));
 
@@ -110,7 +110,7 @@
         }
 
         Tabs.prototype.handelClick = function (e) {
-            var index = $(e.target).index();
+            var index = $(e.currentTarget).index();
             this.go(index);
             this.options.onClickCallBack && this.options.onClickCallBack(index);
         }
